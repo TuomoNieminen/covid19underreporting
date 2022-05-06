@@ -5,6 +5,6 @@ This repositry contain the LateX codes and programming code examples related to 
 ## Contents
 
 - article.tex contains the LateX codes used to typeset the article. 
-- data/table.csv contains data related to the article.
+- data/table2.csv contains data related to the article.
 - code/example.R contains an example on how to apply the method intruduced. The example allows for approximate reproduction of the main results of the article, based on the public data/.
 

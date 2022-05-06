@@ -307,7 +307,7 @@ In the Projection model, the posterior distribution for $\mathbf{\theta}$ was ob
 
 Identical number of samples ($S=40000$) were drawn from the posterior distributions of $\pi^{(0)}(t)$ and $\pi^{(1)}(t)$. For each sample from $\pi^{(0)}(t)$ and $\pi^{(1)}(t)$, a sample from $\Delta(t)$ was obtained by division, repeating over each day $t \in T$ during the study period. 
 
-We utilised the No-U-Turn Sampler algorithm for sampling, which is an efficient Markov Chain Monte Carlo algorithm (\cite{homan2014}). We used STAN and the R package Rstan to carry out the sampling and monitored convergence via the Rhat statistic (\cite{carpenter2017}, \cite{R2021} ,\cite{standev2020rstan}). The STAN code is given in the Supplement: STAN code.
+We utilised the No-U-Turn Sampler algorithm for sampling, which is an efficient Markov Chain Monte Carlo algorithm (\cite{homan2014}). We used STAN and the R package Rstan to carry out the sampling and monitored convergence via the Rhat statistic (\cite{carpenter2017}, \cite{R2021} ,\cite{standev2020rstan}). The STAN model code and an R code example are available on \url{https://github.com/TuomoNieminen/covid19underreporting}.
 
 The choices for prior distribution parameters and other needed quantities to carry out the estimation are shown in Table \ref{tab:priors}. We defined an informative prior distribution for the Estimation model seroprevalence using parameters $\text{logit}(\mu_1) = 0.05, \sigma_1 = 2, \alpha = 2$ and $\beta = 40$. Figure \ref{fig:seroprevalence_prior} shows the prior distribution for $\mathbf{\pi}^{(0)}$. In the prior distribution, each weekly seroprevalence $\pi^{(0)}(t)$ has large variance, meaning that for all $t$ there is significant probability of very low and very high seroprevalence. The prior mean and variance both increase as $t$ increases. See section \ref{seq:results_sens} for sensitivity analysis regarding the prior distribution parameter choices.
 
@@ -399,7 +399,7 @@ The aggregated data which supports the findings of this study are available in t
 
 \section{Supplementary material}
 
-The STAN code which implements the statistical methods described, and an R code example which demonstrates how to apply the methods to the data described in the article, is available in \href{}{GitHub}.
+The STAN code which implements the statistical methods described, and R code example which demonstrates how to apply the methods to the data described in the article, is available online \url{github.com/TuomoNieminen/covid19underreporting}. 
 
 \section{Ethics approval statement}
 
@@ -436,10 +436,6 @@ The study protocol was submitted for ethical review to the HUS ethical review bo
 
 \input{tex/SUPPLEMENT_TAB}
 \newpage
-
-\section{Supplement: STAN code}
-
-\lstinputlisting[]{code/model.stan}
 
 
 \end{document}
