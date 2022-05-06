@@ -1,0 +1,75 @@
+
+
+\begin{tikzpicture}[grow=right, sloped]
+
+% Set the overall layout of the tree
+\tikzstyle{level 1}=[level distance=3.5cm, sibling distance=3.5cm]
+\tikzstyle{level 2}=[level distance=3.5cm, sibling distance=2cm]
+
+% Define styles for bags and leafs
+\tikzstyle{bag} = [text width=4em, text centered]
+\tikzstyle{end} = [circle, minimum width=3pt,fill, inner sep=0pt]
+
+% Builds from bottom to top
+\node[bag] {PCR}
+    child {
+        node[bag] {Screening}        
+            child {
+                 node[bag] {MNT} 
+                    child {
+                        node[end, label=right: True positive] {}
+                        edge from parent
+                        node[above] {$Pos$}
+                        node[below] {$33 / 33$}
+                    } 
+                    child {
+                        node[end, label=right: False negative] {}
+                        edge from parent
+                        node[above] {$Neg$}
+                        node[below] {$0 / 33$}
+                    }
+                edge from parent
+                node[above] {$Pos$}
+                node[below] {$33 / 33$}
+            }
+            child {
+                node[end, label=right: False negative] {}
+                edge from parent
+                node[above] {$Neg$}
+                node[below] {$0 / 33$}
+            }
+            edge from parent 
+            node[above] {$Pos$}
+            node[below] {$33 / 116$}
+    }
+        child {
+        node[bag] {Screening}        
+            child {
+                 node[bag] {MNT} 
+                    child {
+                        node[end, label=right: False positive] {}
+                        edge from parent
+                        node[above] {$Pos$}
+                        node[below] {$0 / 2$}
+                    } 
+                    child {
+                        node[end, label=right: True negative] {}
+                        edge from parent
+                        node[above] {$Neg$}
+                        node[below] {$2 / 2$}
+                    }
+                edge from parent
+                node[above] {$Pos$}
+                node[below] {$2 / 83$}     
+            }
+            child {
+                node[end, label=right: True negative] {}
+                edge from parent
+                node[above] {$Neg$}
+                node[below] {$81 / 83$}
+            }
+            edge from parent 
+            node[above] {$Neg$}
+            node[below] {$83 / 116$}
+    };
+\end{tikzpicture}

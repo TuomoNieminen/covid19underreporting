@@ -1,0 +1,180 @@
+
+\begin{figure}[!htb]
+\centering
+\caption{Numbers of COVID-19 cases by week and municipality in the extended capital region of Helsinki and Uusimaa, Finland (HUS area) during the first wave of the 2020 COVID-19 outbreak. In each map, the number of cases in each municipality is shown if it is 5 or more. Detailed data for three weeks in June (2020-06-08 / 2020-06-15, 2020-06-15 / 2020-06-22 and 2020-06-22 / 2020-06-29), with total 147 cases, are not shown in the figure.}
+
+\begin{tabular}{cccccccccc}
+\includegraphics[width = 2.1in]{img/hus_incidence_04.png} & 
+\includegraphics[width = 2.1in]{img/hus_incidence_05.png} &  
+\includegraphics[width = 2.1in]{img/hus_incidence_06.png} \\
+\includegraphics[width = 2.1in]{img/hus_incidence_07.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_08.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_09.png} \\
+\includegraphics[width = 2.1in]{img/hus_incidence_10.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_11.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_12.png} \\
+\includegraphics[width = 2.1in]{img/hus_incidence_13.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_14.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_15.png} \\
+\includegraphics[width = 2.1in]{img/hus_incidence_16.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_17.png} &
+\includegraphics[width = 2.1in]{img/hus_incidence_21.png} 
+\end{tabular}
+
+\label{fig:huscases}
+\end{figure}
+
+\newpage
+
+\begin{figure}[!htb]
+\centering
+\caption{Population sampling in the extended capital region of Helsinki and Uusimaa, Finland (HUS area) during the first 10 weeks of the serological surveys. Population sampling was carried out weekly or biweekly and each map corresponds to a single sampling week. The first day of the week and the targeted native languages are listed for each sampling week (fi = Finnish, sv = Swedish, ru = Russian, en = English). The number of invited individuals by municipality are shown on each map. }
+
+\begin{tabular}{cccccccccc}
+\includegraphics[width = 2.1in]{img/sample01.png} &  
+\includegraphics[width = 2.1in]{img/sample02.png} &
+\includegraphics[width = 2.1in]{img/sample03.png} \\
+\includegraphics[width = 2.1in]{img/sample04.png} &
+\includegraphics[width = 2.1in]{img/sample05.png} &
+\includegraphics[width = 2.1in]{img/sample06.png} \\
+\includegraphics[width = 2.1in]{img/sample07.png} &
+\includegraphics[width = 2.1in]{img/sample08.png} &
+\includegraphics[width = 2.1in]{img/sample09.png} \\
+\includegraphics[width = 2.1in]{img/sample10.png} 
+\end{tabular}
+
+\label{fig:survey}
+\end{figure}
+
+\newpage
+
+\begin{figure}[!htb]
+\centering
+\include{tex/seroconversion}
+\caption{Timeline from a SARS-CoV-2 infection to seroconversion.} 
+\label{fig:seroconv}
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[!htb]
+\input{tex/infections_overall}
+\caption{SARS-CoV-2 infections are observed as diagnosed COVID-19 disease cases or by antibody testing in the participants of the serological surveys. Here, $I_i(t)$ indicates SARS-CoV-2 infection in individual $i$ by day $t$; $S_i(t)$ indicates symptom onset in individual $i$ by day $t$; $r_i$ is the diagnosis day of a COVID-19 case, with a total $R(t)$ cases by day $t$; $A_i(t)$ indicates seroconversion in individual $i$ by day $t$, possibly observed as a positive antibody test $y_{i, t} = 1$ among $n_t$ blood samples taken on day $t$; $\pi(t)$ indicates the proportion of seroconverted individuals in the population of size $N$ (seroprevalence).} 
+\label{fig:models}
+
+\end{figure} 
+
+\newpage
+
+\begin{figure}[!htb]
+
+\input{tex/model1}
+\caption{The model for seroprevalence $\pi^{(0)}(t)$ (Estimation model). The study period $T$ is split into weeks $W$. On day $t$ during the study period, where $t$ belongs to week $w$, the antibody test result $y^{(z)}_{i, t}$ for individual $i$, $i = {1, ..., n_t}_{t \in w}$, depends on the seroprevalence $\pi^{(0)}_w$ during week $w$ and the specificity $\delta^{(z)}$ of the antibody test $z$, where $z \in \{\text{Screen}, \text{Confirmation}\}$. In the prior distribution, the seroprevalence during the first week $\pi_1^{(0)}$is distributed according to parameters $\mu_1$ and $\sigma_1^2$, and the seroprevalence during week $w$ depends on the two previous weeks. The strength of the dependency is controlled by $\sigma$, with a prior distribution depending on parameters $\alpha$ and $\beta$. } 
+\label{fig:model1}
+
+\end{figure}
+
+\newpage
+
+\begin{figure}[!htb]
+
+\input{tex/model2}
+\caption{The model for seroprevalence $\pi^{(1)}(t)$ (Projection model). Left plate: The duration from symptoms to seroconversion was modelled based on data from \cite{Tan2020}. Individuals $j$, $j = 1, .., N^{(Tan)}$, experienced COVID-19 symptoms on day $s_j = 0$ and were tested for antibodies $q$ days later, where $q$ varied from 7 to 49 days. Individuals were tested on multiple days. Here, $A_j(u)$ denotes whether individual $j$ had seroconverted by day $u$, and ($y_j^{(q)}$) indicates the result of an antibody test taken on the $q$:th day. The duration from symptoms to seroconversion was modelled as a lognormal distribution with parameters $(\mu_U, \sigma_U)$. Right plate: The posterior distribution of $(\mu_U, \sigma_U)$ is utilised to project the seroconversion status $A_i(t)$ for each individual $i = 1, ..., R(t + C)$ with COVID-19 symptom onset before day $t \in T$ during the study period. The symptoms are assumed to have occurred on day $\hat{s}_i = r_i - C$, where $C$ is the lag from symptom onset to the COVID-19 diagnosis day $r_i$. The individual projections are used to derive the population level projection for the seroprevalence on day $t$, $\pi^{(1)}(t)$.} 
+\label{fig:model2}
+
+\end{figure}
+
+
+\newpage
+
+
+\begin{figure}[!htb]
+\centering
+\caption{Seroprevalence in the extended capital region of Finland during the first wave of the COVID-19 epidemic. Both images show the estimates $\pi^{(0)}(t)$ and projections $\pi^{(1)}(t)$ for seroprevalence using the serology survey observations and COVID-19 cases (FNIDR projection), respectively. The image on the left shows results for the screening test and the image on the right shows results for the confirmation test. Solid lines are posterior means and the shaded areas correspond to 95\% credible intervals derived from the pointwise 2.5\% and 97.5\% quantiles. The dashed lines show the projected seroprevalence and the shaded areas correspond to 95\% credible intervals, however, the intervals for projected seroprevalence are very narrow and not visible.}
+
+\begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{img/ttr_screen.png}
+\caption{Posterior means and 95\% credible intervals of seroprevalence $\pi^{(0)}(t)$ (Screening test) and projected seroprevalence $\pi^{(1)}(t)$}  \label{fig:ttr_screen}
+\end{subfigure}%
+\hspace*{\fill}
+\begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{img/ttr_mnt.png} 
+\caption{Posterior means and 95\% credible intervals of seroprevalence $\pi^{(0)}(t)$ (Confirmation test) and projected seroprevalence $\pi^{(1)}(t)$} \label{fig:ttr_mnt}
+\end{subfigure}
+
+\label{fig:seroprevalence}
+\end{figure}
+
+
+\newpage
+
+
+\begin{figure}[!htb]
+\centering
+\caption{Posterior distributions of seroprevalence $\pi^{(0)}(t)$, where t corresponds to \printdate{2020-05-08}, learned from the screening (left image) and confirmation (right image) test data. The seroprevalence is shown in percentage scale.}
+
+\begin{subfigure}{0.45\textwidth}
+\includegraphics[width=\linewidth]{img/screen_p_sero_interestdate.png} 
+\caption{Posterior density of $\pi^{(0)}(t)$, where $t$ corresponds to \printdate{2020-05-08}, learned from the screening test data.} \label{fig:screen_p_sero_interestdate}
+\end{subfigure}%
+\hspace*{\fill}
+\begin{subfigure}{0.45\textwidth}
+\includegraphics[width=\linewidth]{img/mnt_p_sero_interestdate.png}
+\caption{Posterior density of $\pi^{(0)}(t)$, where $t$ corresponds to \printdate{2020-05-08}, learned from the confirmation test data.} \label{fig:mnt_p_sero_interestdate}
+\end{subfigure}
+
+\label{fig:results_interestdate_seroprev}
+\end{figure}
+
+
+\newpage
+
+
+
+\begin{figure}[!htb]
+\centering
+\caption{Extent of underreporting in the extended capital region of Finland during the first wave of the COVID-19 epidemic. Both figures show the underreporting ratio $\Delta(t)$ (see equation \ref{eq:ratio}). The image on the left shows results for the screening test and the image on the right shows results for the confirmation test. Solid lines are posterior means and the shaded areas correspond to 95\% credible intervals derived from the pointwise 2.5\% and 97.5\% quantiles.}
+
+\begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{img/ttr_screen_ratio.png} 
+\caption{Posterior means and 95\% credible intervals of underreporting ratio $\Delta(t)$ (Screening test)} \label{fig:ttr_screen_ratio}
+\end{subfigure}%
+\hspace*{\fill}
+\begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{img/ttr_mnt_ratio.png}
+\caption{Posterior means and 95\% credible intervals of underreporting ratio $\Delta(t)$ (Confirmation test)} \label{fig:ttr_mnt_ratio}
+\end{subfigure}
+
+\label{fig:underreporting}
+\end{figure}
+
+
+\newpage
+
+
+\begin{figure}[!htb]
+\centering
+\caption{Posterior distributions of underreporting ratio $\Delta(t)$, where t corresponds to \printdate{2020-05-08}, learned from the screening test (left image) and confirmation test (right image) data.}
+
+\begin{subfigure}{0.45\textwidth}
+\includegraphics[width=\linewidth]{img/screen_ratio_interestdate.png}
+\caption{Posterior density of $\Delta(t)$, where $t$ corresponds to \printdate{2020-05-08}, learned from screening test data}  \label{fig:screen_ratio_interestdate}
+\end{subfigure}%
+\hspace*{\fill}
+\begin{subfigure}{0.45\textwidth}
+\includegraphics[width=\linewidth]{img/mnt_ratio_interestdate.png} 
+\caption{Posterior density of $\Delta(t)$, where $t$ corresponds to \printdate{2020-05-08}0, learned from confirmation test data} \label{fig:mnt_ratio_interestdate}
+\end{subfigure}
+
+\label{fig:results_interestdate_ratio}
+\end{figure}
+
+
+
+
+\newpage
+
+
+
+

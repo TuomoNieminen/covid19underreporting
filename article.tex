@@ -1,0 +1,446 @@
+\documentclass[oupdraft]{bio}
+% \usepackage[colorlinks=true, urlcolor=citecolor, linkcolor=citecolor, citecolor=citecolor]{hyperref}
+\usepackage{url}
+
+% Add history information for the article if required
+\history{Received August 1, 2010;
+revised October 1, 2010;
+accepted for publication November 1, 2010}
+
+\usepackage{moreverb}
+
+\usepackage{bbm}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{systeme,mathtools}
+
+
+\usepackage[english]{isodate}
+
+\newcommand{\beginsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{positioning,arrows.meta,quotes}
+\usetikzlibrary{shapes,decorations}
+\usetikzlibrary{bayesnet}
+\tikzset{>=latex}
+\tikzstyle{plate caption} = [caption, node distance=0, inner sep=0pt,
+below left=5pt and 0pt of #1.south]
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\graphicspath{ {./images/} }
+
+\newcommand\BibTeX{{\rmfamily B\kern-.05em \textsc{i\kern-.025em b}\kern-.08em
+T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+
+%\raggedbottom
+
+\begin{document}
+
+% Title of paper
+\title{Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys}
+
+% List of authors, with corresponding author marked by asterisk
+
+\author{Tuomo A. Nieminen$^\ast$, Kari Auranen, Sangita Kulathinal, \\
+Tommi Härkänen, Merit Melin, Arto Palmu, Jukka Jokinen}
+
+\textit{Finnish Institute for Health and Welfare,
+University of Turku,
+University of Helsinki}
+\\[2pt]
+
+% \author[1,2]{Tuomo A. Nieminen$^\ast$}
+% \author[1,3]{Kari Auranen}
+% \author[2, 1]{Sangita Kulathinal}
+% \author[1,2]{Tommi Härkänen}
+% \author[1]{Merit Melin}
+% \author[1]{Arto Palmu}
+% \author[1,2]{Jukka Jokinen}
+
+% \address[1]{\orgname{Finnish Institute for Health and Welfare}, \orgaddress{\country{Finland}}}
+% \address[2]{ \orgname{University of Helsinki}, \orgaddress{\country{Finland}}}
+% \address[3]{ \orgname{University of Turku}, \orgaddress{\country{Finland}}}
+
+
+% E-mail address for correspondence
+{\email{tuomo.nieminen@thl.fi, tuomo.a.nieminen@gmail.com}}
+
+% Running headers of paper:
+\markboth%
+% First field is the short list of authors
+{Tuomo A. Nieminen and others}
+% Second field is the short title of the paper
+{Underreporting SARS-CoV-2 infections}
+
+\maketitle
+
+% Add a footnote for the corresponding author if one has been
+% identified in the author list
+\footnotetext{To whom correspondence should be addressed.}
+
+
+\abstract[Abstract]{In Finland, the first wave of the COVID-19 epidemic caused by the severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) took place from March to June 2020, with the majority of COVID-19 cases diagnosed in the extended capital region. The magnitude and trend in the incidence of COVID-19 is one way to monitor the course of the epidemic. The diagnosed COVID-19 cases are a subset of the infections and therefore the COVID-19 incidence underestimates the SARS-CoV-2 incidence. The likelihood that an individual with SARS-CoV-2 infection is diagnosed with COVID-19 depends on the clinical manifestation as well as the infection testing policy and capacity. These factors may fluctuate over time and the underreporting of infections changes accordingly. Quantifying the extent of underreporting allows the assessment of the true incidence of infection. \textbf{Methods}: To obtain information on the incidence of SARS-CoV-2 infection in Finland, a series of serological surveys was initiated in April 2020. We utilise Bayesian inference, applied to data from the serological surveys and COVID-19 cases, to estimate the time-dependent underreporting of SARS-Cov-2 infections. \textbf{Results}: There were 1 to 5 (95\% probability) SARS-CoV-2 infections for every COVID-19 case during the first wave of the COVID-19 epidemic in Finland. The underreporting was highest before April when there were 4 to 17 (95\% probability) infections for every COVID-19 case. It is likely that between 0.5\%–1.0\% (50\% probability) and no more than 1.5\% (95\% probability) of the population in the extended capital region were infected with SARS-CoV-2 by the beginning of July 2020.}
+
+
+
+
+\section{Introduction}
+
+When a novel virus initiates an epidemic, an important question is how fast the virus spreads in the population. If the virus causes clinical disease, the rate of epidemic growth can be monitored by the incidence of diagnosed disease cases. However, mild or asymptomatic infections may be difficult or impossible to observe directly, and therefore the true incidence of infection can not be learned solely based on the diagnosed cases. Infection usually leaves a mark in the form of antibodies, i.e. immunoglobulin proteins developed by the immune system and capable of identifying and neutralising the virus. Consequently, the true incidence of infection can be learned through serological surveys, i.e. studies of the prevalence of individuals with antibodies (seroprevalence). Comparing the seroprevalence to the cumulative incidence of diagnosed cases allows one to learn about the underreporting of infections, which consequently allows monitoring the true spread of the virus. 
+
+There are challenges in estimating the underreporting. The rate of infections and diagnostic practises may quickly change, and there may be different delays from infection to disease onset and to developing antibodies. In this case study, we propose a Bayesian approach for estimating the time-dependent underreporting of infections during the beginning of an epidemic and we apply our method to data from the 2020 COVID-19 epidemic in Finland. In our analysis we integrate three data sources: series of serological surveys, registered disease cases, and external data on antibody development.
+
+In Finland, the first wave of the COVID-19 epidemic caused by the severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) occurred from March through June 2020. In early March, tens of weekly COVID-19 cases were diagnosed in the extended capital region of Helsinki and Uusimaa (HUS area) with a population of 1.7 million, marking the beginning of the epidemic in the region, while relatively few cases were diagnosed in other parts of the country. Figure \ref{fig:huscases} shows the numbers of COVID-19 cases by week and municipality in the HUS area. Already by mid March, hundreds of weekly cases were diagnosed. The rate of new cases started to decline in early April, most likely because of a partial lockdown in the country. By mid June, the rate of weekly cases, both in the HUS area and the country as a whole, reduced to the tens of cases, and the first wave of the COVID-19 epidemic ended by the end of June. A total of 7286 COVID-19 cases were diagnosed during the first epidemic wave, of which 5347 cases were diagnosed in individuals residing in the HUS area. 
+
+The clinical manifestations of SARS-CoV-2 infection range from asymptomatic to severe and potentially fatal disease. To be diagnosed as a COVID-19 case, a SARS-CoV-2 infection needs to be laboratory confirmed or, alternatively, a clinical diagnosis of COVID-19 made by a medical doctor. The likelihood of a SARS-CoV-2 infection being detected thus depends on the clinical manifestation as well as the infection testing policy and capacity at the time of infection.
+
+It is likely that a relatively large proportion of infections went undetected during the first wave of the epidemic in Finland. No widespread testing of asymptomatic individuals was in place, making it probable that at least almost all asymptomatic infections were missed. Many symptomatic infections were likely missed as well due to the care instructions and testing policy in place. In Finland, the underreporting was probably most prominent among the young and healthy in the beginning of the first epidemic wave, when the official care instructions for healthy individuals with symptoms compatible with COVID-19 were to stay at home with no contact to health care (\cite{huscare202003}). These instructions were affected by the limited infection testing capacity. During the epidemic peak, the daily number of infection tests in the HUS area was still increasing through rapid capacity building. The daily testing capacity increased from approximately 300 during March to 1000 during April to 1500 tests from May onward (\cite{Jarva2020}).
+
+Based on a population-based seroepidemiological study in Spain in April-May 2020, Pollán et al. found that approximately one third of SARS-CoV-2 infections were asymptomatic and that a substantial proportion of symptomatic infections also went undetected (\cite{Pollan2020}). \cite{Stringhini2020} analysed the prevalence of immunoglobulin G (IgG) antibodies in Geneva during spring 2020 and estimated that there were 11 SARS-Cov-2 infections for every COVID-19 case. \cite{erikstrup2020} analysed blood donation data in April-May 2020 in Denmark and estimated that the ratio of the expected number of seropositives to the number of COVID-19 cases was between 7–20. To obtain information on the incidence of SARS-CoV-2 infection in Finland, a series of serological surveys was initiated in April 2020 (serosurveys). 
+
+While there may be significant delays from SARS-CoV-2 infection until developing detectable antibodies, i.e. until seroconversion, the symptoms and diagnosis of COVID-19 usually occur with less delay. This means that the two sources of observations are not directly comparable at any given time. One solution to this problem is to compare the SARS-CoV-2 seroprevalence to the cumulative incidence of COVID-19 from 2-3 weeks ago, thus accounting for the average delay in developing antibodies after COVID-19 symptoms. This approach can provide an estimate of underreporting, but it does not take into account the uncertainty and individual-level variation in the time lag from COVID-19 symptoms to seroconversion. 
+
+To better address the delays in antibody responses, we utilise previously published data about the time lag from COVID-19 symptom onset to seroconversion  (\cite{Tan2020}). We estimate the distribution of the time lag and project the SARS-CoV-2 seroprevalence based on the COVID-19 incidence. We then estimate the SARS-CoV-2 seroprevalence based on the observations from the series of serosurveys. Finally, we compare the seroprevalence projections with the estimated seroprevalences over time and learn the time-evolving underreporting of SARS-CoV-2 infections based on the ratio of the two measures of seroprevalence.
+
+We utilise Bayesian inference and data from the extended capital region in Finland (HUS area) to carry out the analysis. The novelty of our methodology is in accounting for the uncertainty in the time lag from disease symptoms to seroconversion when estimating the time-evolving underreporting of infections. Our analysis shows how the underreporting of SARS-CoV-2 infections evolved over time during the first epidemic wave in Finland.
+
+
+\section{Data sources}
+
+\subsection{Study population}
+
+The target population in this study include individuals aged 18-69 years and living in the HUS area with native language Finnish, Swedish, English or Russian. We utilised the Finnish Population Information System (PIS) to retrieve the native languages of all COVID-19 cases and the serological survey participants. We also retrieved the age distribution of the study population from the same system. The PIS includes the Finnish personal identity code, birth date, native language and municipality of residence for all Finnish residents (\cite{popreg}). We present some data for the whole HUS area population, but our main analysis is based on data from the study population.
+
+
+\subsection{COVID-19 cases}
+
+The Finnish National Infectious Diseases Register (FNIDR) collects individual-level data on patients infected with SARS-CoV-2 (\cite{FNIDR}). These data consist of COVID-19 cases notified as either a positive SARS-CoV-2 finding from a microbiological laboratory or a clinical diagnosis by a medical doctor. Approximately 95\% of the COVID-19 cases during the first epidemic wave in Finland were based on a positive SARS-CoV-2 finding from a polymerase chain reaction (PCR) test. The data was extracted for analysis on \printdate{2021-11-31}.
+
+The sample date of each positive PCR test and/or a doctor's diagnosis is recorded in the FNIDR along with information regarding the patient, including the Finnish personal identity code. Notifications related to the same patient during a 12-month period are combined as a single COVID-19 case. In our analysis, the COVID-19 diagnosis date is taken to be the first positive PCR sample date or the first doctor's diagnosis date, whichever occurred first. In the capital city (Helsinki), the average number of days from symptom onset to COVID-19 diagnosis was close to 6 days in March 2020, close to 4 days in April and close to 3 days in May (data not shown). 
+
+
+\subsection{Serological surveys}
+
+In April 2020, the Finnish Institute for Health and Welfare (THL) initiated a series of serological surveys (serosurveys) to obtain information on how large a proportion of the population had developed antibodies to SARS-CoV-2 in different regions in Finland over time (\cite{serostudy}). Each survey targeted most of the largest municipalities in Finland and individuals aged 18–69. In each survey round, individuals were randomly sampled from PIS and invited to participate. Successive surveys were conducted weekly or biweekly.  
+
+Figure \ref{fig:survey} shows the recruitment to and participation in the surveys in the HUS area during the spring 2020. Due to practical reasons, only Finnish speaking individuals were recruited during the first two weeks, after which the study expanded to cover individuals with native language Swedish, English or Russian. The questionnaire was translated to each language. Other language groups were included in June 2020. The recruitment targeted only few of the largest municipalities during the first two weeks and then expanded to cover all municipalities in the HUS area. The sample size in the HUS area decreased after the second week and the participation rate declined from 64\% to 50\% during spring 2020. 
+
+The age distribution of the study population and the survey participants during the first epidemic wave are shown in Figure \ref{fig:pop_ttr_sero}. The median and the 25\% quantile of the age of the survey participants were slightly higher than in the study population, indicating that the participation rate was higher in older age groups. Otherwise the age distribution of the participants was similar to the study population. 
+
+Participation in the survey included giving a blood sample. The first and last blood samples during the first epidemic wave were taken on \printdate{2020-04-09} and \printdate{2020-07-03}, respectively.
+
+\subsection{Laboratory methods}
+
+Blood samples from the serosurvey participants were analysed using a two stage procedure: (1) a screening test, and (2) a microneutralisation test (MNT) following a positive result at stage (1). The screening test was a bead-based fluorescence immunoassay that measures IgG antibodies to the SARS-CoV-2 nucleoprotein (\cite{Ekstrom2021}). The MNT is a cytopatic effect-based test, which measures the capacity of neutralising antibodies to prevent an infectious virus from causing damage in cell culture. SARS-CoV-2 strains circulating in Finland in early 2020 were used in the MNT assay; CoV-19/Finland/1/2020 (GISAID accession ID EPI\_ISL\_407079) and hCoV-19/Finland/FIN-25/2020 (EPI\_ISL\_412971). MNT was used as the second test as it is highly specific to SARS-CoV-2  (\cite{haveri2020},  \cite{Ekstrom2021}). Obtaining positive results from the two tests, the screening test and the MNT combined, was considered a confirmed presence of antibodies due to a past or ongoing SARS-CoV-2 infection (seroconversion). In the following, the combined test is referred to as the confirmation test.
+
+In order to maximise accuracy, the confirmation test was calibrated utilising data unrelated to the surveys (\cite{Ekstrom2021}). The ground truth for a past or ongoing SARS-CoV-2 infection was based on a positive PCR test close to 30 days prior to the antibody tests. The ground truth of no SARS-Cov-2 was based on blood samples from 2019. Based on calibration, a sample was considered positive for the screening test if the mean fluorescent intensity (MFI) value of the test was above 500. In the MNT, neutralising antibodies were detected from 2-fold serially diluted serum samples starting from dilution 1:4. Based on calibration, a titer of $\geq 4$ was considered positive. Figure \ref{fig:labmethod} describes the optimised test performance on the calibration data for both the screening and confirmation tests. The screening test was 100\% sensitive, after which the MNT was both 100\% specific and 100 \%sensitive. Therefore the optimised performance of the confirmation test was 100\% sensitive and 100\% specific. The sensitivity and specificity of the screening test alone were 100\% and 97.59\%, respectively. 
+
+
+\subsection{Development and detection of antibodies}
+
+For the screening test, we say that an individual is \emph{seropositive} if the test gives a positive result. If the seropositivity is due to a SARS-CoV-2 infection, we say that the individual is \emph{seroconverted}. An individual may be seropositive but not seroconverted, because the screening test may produce a false positive result due to cross-reactive IgG antibodies induced by other human coronaviruses. Neutralising antibodies measured by the MNT are always due to SARS-CoV-2 and therefore and individual with a positive confirmation test is always both seropositive and seroconverted. 
+
+The time from infection to seroconversion is subject to individual-level variation. If time from infection is short, the antibody concentration may not have reached the test detection threshold. If time from infection is long, the antibodies may wane below the detection threshold. The sensitivity of antibody detection (e.g. the confirmation test) is therefore likely to be lower than 100\% in both of these cases. When modelling the time-dependent seropositivity, we take into account the slow development of antibodies after infection. However, we omit waning immunity due to the relatively short study period.
+
+For symptomatic individuals, the symptoms usually develop sooner than detectable antibodies. \cite{Tan2020} present results where symptomatic SARS-CoV-2 infected patients were followed for 6 weeks starting from symptom onset and reported the IgG positive proportions of patients for each week. The antibody test utilised in their analysis was similar to the screening test of the current study. The data are reproduced in Table \ref{tab:Tandata}. A total 312 tests were performed on 65 patients, with 3–7 days between consecutive tests. At day 7 since symptom onset, only 3.4\% of the patients tested positive for IgG antibodies. At day 14, 50\% tested positive and when 28-49 days had passed, between 74\% and 87\% tested positive. \cite{Tan2020} report that of the 67 patients included in their study, 29 were classified with severe pneumonia. The median age of the patients was 49 years and twenty-five patients had underlying diseases.
+
+
+\section{Statistical models and methods}
+
+Let $T = [0, D]$, $D = 86$, denote the study period, i.e. the time period starting on \printdate{2020-04-09} (the date of the first blood sample taken from the serosurvey participants), until \printdate{2020-07-03} (the date of the last blood sample taken during the first epidemic wave). Let $\tau_i$ denote the day of SARS-CoV-2 infection in individual $i$, $i = 1, ..., N$. Here $N = 1000821$ is the size of the study population. The infections we consider may have occurred before the study period but not after (i.e. $\tau_i$ may be negative and $\tau_i < D$).
+
+After the infection, on day $s_i$, the individual may develop symptoms of COVID-19. Then, $C$ days after the symptom onset, on day $r_i = s_i + C$, the individual may be diagnosed with COVID-19. In this case, information about the diagnosis and the individual is recorded in the FNIDR as a COVID-19 case. We assume that the delay $C$ from symptom onset to diagnosis is $3.5$ days and is the same for all individuals. The cumulative number of COVID-19 cases by day $t$ is $R(t)$, where $R (t) = \sum_i^N \mathbbm{1}(r_i \leq t)$.
+
+An individual $i$ has \emph{seroconverted} by day $t$ if $t > a_i > \tau_i$, where $a_i$ is the day after which the SARS-CoV-2 antibodies in the individual are detectable. We define $A_i(t) = \mathbbm{1}(a_i < t)$ as an indicator function taking value $1$ for individual $i$ if seroconversion has occurred by day $t$ and $0$ otherwise. For individuals with diagnosed COVID-19 we assume that seroconversion occurs after the symptom onset day (i.e. $a_i > s_i$). In those cases, we use $U_i$ to denote the number of days from symptom onset to seroconversion. Figure \ref{fig:seroconv} summarises the notation and describes the timeline from SARS-CoV-2 infection to seroconversion. 
+
+Regardless of the infection status, an individual from the study population may be randomly selected to participate in one of the serosurveys. Let $y^{(z)}_{i,t} \in \{0, 1\}$ denote the binary test result (i.e. seropositivity) for individual $i$ who was randomly selected into the survey and gave a sample for antibody testing on day $t \in T$, where $z \in \{\text{Screen}, \text{Confirmation}\}$ denotes the test used to derive the result. We denote the specificity of test $z$ as $\delta^{(z)} = \Pr(y^{(z)}_{i,t} = 0 \mid \tau_i > t)$. If the test $z$ is not fully specific, i.e. $\delta^{(z)} < 1$, then the result may be positive ($y^{(z)}_{i,t} = 1$) without a SARS-COV-2 infection. 
+
+Figure \ref{fig:models} displays how SARS-CoV-2 infections may have been be observed as COVID-19 cases or positive antibody test results. To compare estimates of seroprevalence based on the two types of observation (serosurveys and COVID-19 cases), we quantify the distribution of the time lag from COVID-19 symptom onset to seroconversion. We then project the time-dependent seroprevalence based on the diagnosed COVID-19 cases, which allows for comparison to the seroprevalence estimated from the serosurveys.
+
+
+\subsection{Estimation target}
+
+Under two independent models, the quantity of interest is seroprevalence $\pi(t)$, i.e. the proportion of the population that has seroconverted by time $t$, where $\pi(t) = \Pr(A_i(t) = 1) = \mathbbm{E}(A_i(t))$, for $i = 1, ..., N$. We estimate $\pi(t)$ using (i) observations from the serosurveys and (ii) the incidence of COVID-19 cases. We denote $\pi^{(0)}(t)$ to indicate the seroprevalence when based on the serosurveys and $\pi^{(1)}(t)$ when based on COVID-19 cases. Our interest is in estimating the ratio of these two seroprevalence parameters on each day $t \in T$ during the study period: 
+
+\begin{equation}\label{eq:ratio}
+\begin{split}
+\Delta(t) = \frac{\pi^{(0)}(t)}{\pi^{(1)}(t)}.
+\end{split}
+\end{equation}
+
+We estimate $\pi^{(0)}(t)$ and the corresponding $\Delta(t)$ separately for data from the two antibody tests but consider the analysis based on the confirmation test as the main result. In section \ref{seq:Models} we describe an \emph{Estimation model} used to estimate $\pi^{(0)}(t)$ and a \emph{Projection model} used to estimate $\pi^{(1)}(t)$.  We expect that $\pi^{(0)}(t)$ gives a reasonably unbiased estimate of the true seroprevalence $\pi(t)$ but expect that the projection $\pi^{(1)}(t)$ gives an underestimate of the true $\pi(t)$. We therefore expect that $\Delta(t) > 1$ and interpret $\Delta(t)$ as an underreporting ratio, i.e. quantifying the extent of underreporting of SARS-CoV-2 infections up until time $t$. 
+
+\subsection{Models} \label{seq:Models}
+
+In this section, we specify the Estimation and Projection model of the seroprevalence. We then describe the estimation of seroprevalence and underreporting under both models. We utilise a Bayesian framework for statistical inference and numerical methods to derive the posterior distributions of all unknown quantities.
+
+\subsubsection{Estimation model} \label{seq:model1}
+
+This model relates to the lower part of Figure \ref{fig:models} (Sampling). The Estimation model is used to estimate the time-dependent seroprevalence based on antibody test results in the serosurvey participants. Due to the small numbers of daily blood samples in the serosurveys, we split the study period $T$ into 13 non-overlapping seven day periods (weeks), $W = [0,7), [7,14), .... [84, 86]$. We assume that the seroprevalence is piecewise constant by week and let $\pi^{(0)}_w$ denote the seroprevalence during week $w \in W$. 
+
+We describe the prior uncertainty in the weekly seroprevalence as follows. For the first week, the logit of the seroprevalence is assumed to be normally distributed with expectation $\mu_1$ and variance $\sigma_1^2$. The logit of the prevalence in any later week is assumed to depend on the prevalence during the previous week with a non-decreasing trend. A shared variance parameter $\sigma^2$ controls the strength of the dependency on the previous weeks, with $\sigma$ given a gamma prior with parameters $\alpha$ and $\beta$. The structure of the prior model thus is:
+\begin{equation}\label{eq:model1_prior}
+\begin{split}
+\sigma \sim \text{Gamma}(\alpha, \beta), \\
+g(\pi^{(0)}_1) \sim N(\mu_1, \sigma_{1}^2), \\
+g(\pi^{(0)}_w) \sim N(g(\pi^{(0)}_{w-1}) +  \text{trend}_w, \sigma^2 )  \quad \text{for } w \geq 2, \text{ where}\\
+\text{trend}_w =
+\begin{cases}
+0,  \text{when } w = 2 \\
+\max\{0, g(\pi^{(0)}_{w-1}) - g(\pi^{(0)}_{w-2})\}, \text{when } w > 2,
+\end{cases}
+\end{split}
+\end{equation}
+where $g(\pi) = \log(\pi / (1-\pi))$ is the logit function. This defines a prior distribution of the parameter vector $g(\mathbf{\pi}^{(0)}) = (g(\pi^{(0)}_1), ..,  g(\pi^{(0)}_{13}))$. We denote the prior distribution of $g(\mathbf{\pi}^{(0)})$ as $p(g(\mathbf{\pi}^{(0)}); \Phi)$, where the vector $\Phi=(\alpha, \beta, \mu_1, \sigma_1)$ collects the prior parameters. The seroprevalence for week $w$ is $\pi_w^{(0)} = g^{-1}(g(\pi_w^{(0)}))$, where $g^{-1}(x) = 1 / (1 + \exp (-x))$ is the inverse-logit function. 
+
+The observations $y^{(z)}_{i,w} \in \{0,1\}$ arise when $n_w$ randomly selected individuals from the population give a blood sample during week $w$ and a result is derived via antibody test $z$. The probability that the test result is positive for individual $i$ is 
+
+\begin{equation}\label{eq:model1_prob1}
+\Pr(y^{(z)}_{i,w} = 1) = f(\pi^{(0)}_{w}, \delta^{(z)}) = \pi^{(0)}_{w} + (1- \pi^{(0)}_{w}) \cdot ( 1 - \delta^{(z)}), 
+\end{equation}
+where $1 - \delta^{(z)}$ is the probability that an individual without SARS-CoV-2 infection gives a (false) positive test result. 
+
+Let $y_w^{(z)} = \sum_{i=1}^{n_w} y^{(z)}_{i,w}$ denote the number of positive samples during week $w$. We assume that, conditionally on the weekly seroprevalence, the observations $y^{(z)}_{i,w}$ are independent and identically distributed. The conditional probability model of the total count $y_w^{(z)}$ then is
+
+\begin{equation}\label{eq:model1_prob}
+\begin{split}
+y_w^{(z)} \mid g(\pi^{(0)}_{w}); \delta^{(z)} \sim \text{Binomial}(n_w, f(\pi^{(0)}_{w}, \delta^{(z)})), \quad \text{ for } w \in W.
+\end{split}
+\end{equation}
+
+Based on the vector of observations $\mathbf{y}^{(z)} = (y_1^{(z)}, ..., y_{13}^{(z)})$, the likelihood function of the logit seroprevalence $g(\mathbf{\pi}^{(0)})$ is
+
+\begin{equation}\label{eq:model1_lik}
+\begin{split}
+p(\mathbf{y}^{(z)} \mid g(\mathbf{\pi}^{(0)}); \delta^{(z)} ) = \prod_{w \in W} \text{Binomial}(y_w^{(z)} \vert n_w, f(\pi^{(0)}_{w}, \delta^{(z)})).
+\end{split}
+\end{equation}
+
+The posterior distribution of $g(\mathbf{\pi}^{(0)})$ is proportional to the product of the prior (\ref{eq:model1_prior}) and the likelihood (\ref{eq:model1_lik}):
+
+\begin{equation}\label{eq:model1_post}
+\begin{split}
+p(g(\mathbf{\pi}^{(0)}) \mid \mathbf{y}^{(z)}; \Phi, \delta^{(z)}) \propto p(g(\mathbf{\pi}^{(0)}) ; \Phi) p(\mathbf{y}^{(z)} \mid g(\mathbf{\pi}^{(0)}), \delta^{(z)} ).
+\end{split}
+\end{equation}
+
+The estimation model is described graphically in Figure \ref{fig:model1}.
+
+\subsubsection{Projection model} \label{seq:model2}
+
+This model relates to the upper part of Figure \ref{fig:models} (Selection). The model is learned from previously published data on antibody development after COVID-19 symptoms. We first describe the model and then show how it is utilised to project the time-dependent seroprevalence based on COVID-19 cases in the FNIDR. 
+
+For individual $j$, the number of days from COVID-19 symptom onset to seroconversion is described by the random variable $U_j$. We assume that each $U_j$ has a lognormal distribution with parameters $\mu_U$ and $\sigma_U^2$. The probability that patient $j$ has secoconverted by day $u$ since symptom onset is $\Pr(U_j \leq u) = F_U(u ; \mathbf{\theta})$, where $\mathbf{\theta} = (\mu_U, \sigma_U^2)$.
+
+To estimate the parameters $\mathbf{\theta}$, we utilise data based on patients who had SARS-CoV-2 antibodies tested on multiple days after COVID-19 symptoms (\cite{Tan2020}). The data are shown in Table \ref{tab:Tandata}. We denote the test result by $y_j^{q} \in \{0, 1\}$ for individuals $j = 1, ...,  n^{q}$, where $n^{q}$ is the number of individuals tested $q$ days after symptom onset, and $q \in Q^{Tan} = \{7, 10, 14, ..., 42, 49 \}$. If the test result is positive (i.e. $y_j^{q} = 1$), the patient is seroconverted and the seroconversion must have occurred before day $q$. The probability model for the individual observation is 
+
+\begin{equation}\label{eq:model2_prob}
+\begin{split}
+y_j^{q}\mid \mathbf{\theta} \sim \text{Bern}( F_U(q ; \mathbf{\theta})).
+\end{split}
+\end{equation}
+
+We assume that the test results are independent given day $q$ and the parameters $\mathbf{\theta}$. Based on the observations $\mathbf{y}^{Tan} =  \{y_j^q, j = 1, ..., n^q, q \in Q^{Tan}\}$, the likelihood function of the parameters $\mathbf{\theta}$ is
+
+\begin{equation}\label{eq:model2_lik}
+\begin{split}
+p(\mathbf{y}^{Tan}\mid \mathbf{\theta}) = \prod_{q \in Q^{Tan}} \prod_{j = 1}^{n^q} \text{Bern}(y_j^{q} \vert F_U(q ; \mathbf{\theta})).
+\end{split}
+\end{equation}
+
+We assume an uninformative prior distribution:
+
+\begin{equation}\label{eq:model2_prior}
+p(\mathbf{\theta}) = p(\mu_U, \sigma_U^2) \propto 1 / \sigma_U^2.
+\end{equation}
+
+The posterior distribution is proportional to the product of the prior (\ref{eq:model2_prior}) and the likelihood (\ref{eq:model2_lik}):
+
+\begin{equation}\label{eq:model2_post}
+\begin{split}
+p(\mathbf{\theta} \mid \mathbf{y}^{Tan}) \propto p(\mathbf{\theta}) p(\mathbf{y}^{Tan}\mid \mathbf{\theta}).
+\end{split}
+\end{equation}
+
+The posterior predictive distribution of $F_U$ is 
+
+\begin{equation}\label{eq:model2_postpred}
+\begin{split}
+\hat {F_U}(u) = p(y_j^u \mid \mathbf{y}^{Tan}) = \int F_U(u; \mathbf{\theta}) p(\mathbf{\theta} \mid \mathbf{y}^{Tan}) d \mathbf{\theta}.
+\end{split}
+\end{equation}
+
+
+We utilise the posterior predictive distribution $\hat {F_U}$ to project seroprevalence based on the FNIDR COVID-19 cases. For each day $t \in T$ during the study period, we first predict the probability of seroconversion in each case $i$, for whom $q_i$ days have passed since symptom onset. We assume that the symptom onset day was $C = 3.5$ days before the diagnosis day $r_i$, and so $q_i = t - (r_i - C)$. The probabilities of seroconversion, each given by $\hat {F_U}(q_i)$, are then combined as the expected number of cases seroconverted, and the seroprevalence is obtained by dividing by the population size $N$. Formally, we project the seroprevalence for day $t \in T$ as
+
+\begin{equation}\label{eq:projection}
+\begin{split}
+\pi^{(1)}(t) 
+&= \frac{1}{N} \sum_i^{R(t + C)} \mathbbm{E}[A_i(t) \mid \mathbf{y}^{Tan}] 
+=  \frac{1}{N} \sum_i^{R(t + C)} \hat {F_U}(t - (r_i - C)),
+\end{split}
+\end{equation}
+where $R(t + C)$ is the number of COVID-19 cases with symptom onset before day $t$. We call $\pi^{(1)}(t)$ the projected seroprevalence. The Projection model is described graphically in Figure \ref{fig:model2}.
+
+\subsection{Estimation of seroprevalence and underreporting} \label{seq:estimation}
+
+In the Estimation model, the posterior distribution for the parameter vector $g(\mathbf{\pi}^{(0)})$ was obtained by sampling from $p(g(\mathbf{\pi}^{(0)}) \mid \mathbf{y}^{(z)}; \Phi, \delta^{(z)})$, see equation \ref{eq:model1_post}. Each sample was then transformed with $g^{-1}(.)$ to obtain samples from the posterior distribution of each weekly seroprevalence $\pi_w^{(0)}$. This provided samples for each day $t \in w$ of the week, resulting in samples from the posterior distribution of each daily seroprevalence $\pi^{(0)}(t)$, $t \in T$. 
+
+In the Projection model, the posterior distribution for $\mathbf{\theta}$ was obtained by sampling from $p(\mathbf{\theta} \mid \mathbf{y}^{Tan})$, see equation \ref{eq:model2_post}. For each posterior sample and for each day $t \in T$ during the study period, seroprevalence was projected as described in equation \ref{eq:projection}, resulting in samples from the posterior predictive distribution of each daily seroprevalence $\pi^{(1)}(t)$, $t \in T$. 
+
+Identical number of samples ($S=40000$) were drawn from the posterior distributions of $\pi^{(0)}(t)$ and $\pi^{(1)}(t)$. For each sample from $\pi^{(0)}(t)$ and $\pi^{(1)}(t)$, a sample from $\Delta(t)$ was obtained by division, repeating over each day $t \in T$ during the study period. 
+
+We utilised the No-U-Turn Sampler algorithm for sampling, which is an efficient Markov Chain Monte Carlo algorithm (\cite{homan2014}). We used STAN and the R package Rstan to carry out the sampling and monitored convergence via the Rhat statistic (\cite{carpenter2017}, \cite{R2021} ,\cite{standev2020rstan}). The STAN code is given in the Supplement: STAN code.
+
+The choices for prior distribution parameters and other needed quantities to carry out the estimation are shown in Table \ref{tab:priors}. We defined an informative prior distribution for the Estimation model seroprevalence using parameters $\text{logit}(\mu_1) = 0.05, \sigma_1 = 2, \alpha = 2$ and $\beta = 40$. Figure \ref{fig:seroprevalence_prior} shows the prior distribution for $\mathbf{\pi}^{(0)}$. In the prior distribution, each weekly seroprevalence $\pi^{(0)}(t)$ has large variance, meaning that for all $t$ there is significant probability of very low and very high seroprevalence. The prior mean and variance both increase as $t$ increases. See section \ref{seq:results_sens} for sensitivity analysis regarding the prior distribution parameter choices.
+
+
+                                      
+\section{Results} \label{seq:results}
+
+
+
+\subsection{SARS-CoV-2 seroprevalence and the cumulative incidence of COVID-19}
+
+Table \ref{tab:covidcase} shows the weekly numbers of blood samples and antibody test results in the serosurveys during the first epidemic wave. Out of 1465 samples taken between \printdate{2020-04-09} and \printdate{2020-07-03}, a total 35 (2.39 \%) were screening test positive and a total 7 (0.48\%) were confirmation test positive. Five of the confirmed positive samples were taken before \printdate{2020-05-04}, when the weekly numbers of samples were high, and they correspond to weekly sample seroprevalences 0.29\%, 0.43\% and 1.18\%. After \printdate{2020-05-04}, the weekly number of available samples decreased significantly and only two confirmed positive samples were observed. 
+
+Table \ref{tab:covidcase} also shows the cumulative incidence of COVID-19 cases in the study population and in all HUS area residents. Three weeks prior to the first confirmed positive blood sample, the cumulative incidence of COVID-19 in the study population was 0.07\% (736 cases, population 1.0 million), and in three weeks it increased to 0.13\% (1330 cases). In all HUS area residents the cumulative incidence of COVID-19 was 0.31\% by the end of the first epidemic wave (5348 cases, population 1.7 million).
+
+Figure \ref{fig:seroprevalence} shows the estimates and projections of the seroprevalence, obtained under the Estimation model and Projection model. Results are shown for both the screening and confirmation tests. Based on the confirmation test, the posterior mean of the seroprevalence remains around 0.5\% until the end of the study period where it slightly increases. The increase at the end is affected by the prior trend, combined with a low number of available blood samples. Based on the screening test, the seroprevalence behaves similarly but the posterior mean is lower and the posterior variance is greater. In both cases, the posterior mean of the projected seroprevalence (based on the COVID-19 cases) remains lower than the posterior mean of the estimated seroprevalence. The discrepancy to the estimated seroprevalence is greater during the beginning of the study period compared to the rest of the study period.
+
+Table \ref{tab:results} shows the estimates and projections of the seroprevalence for selected dates during the study period. Based on the confirmation test, the estimated seroprevalence in the HUS area was 0.49 (95\% CrI: 0.20–0.91) on \printdate{2020-04-09} and 0.58 (95\% CrI: 0.23–1.16) on \printdate{2020-05-28}. The corresponding seroprevalence projections based on COVID-19 cases are 0.06 (95\% CrI:0.05–0.06) and 0.23 (95\% CrI:0.21–0.24), respectively. Figure \ref{fig:results_interestdate_seroprev} shows the posterior distributions of the seroprevalence obtained under the Estimation model on \printdate{2020-05-28}. Based on the confirmation test, the interquartile range (IQR) for the seroprevalence was 0.4\%–0.67\%. The seroprevalence based on the screening test has more uncertainty and the posterior median is lower.
+
+\subsection{Underreporting}
+
+Figure \ref{fig:underreporting} shows the posterior mean and quantiles of the underreporting ratio $\Delta(t)$ (see equation \ref{eq:ratio}), based on either the confirmation or the screening tests. For both tests, the posterior mean of $\Delta(t)$ first decreases, indicating higher underreporting during the beginning of the epidemic, then settles at around 2-3, and finally increased slightly toward the end of the first wave.
+
+Table \ref{tab:results} shows the posterior mean and credible interval of $\Delta(t)$ for selected dates during the study period. Based on the confirmation test, there had been 8.9 (95\% CrI: 3.6-16.5) infections for every COVID-19 case up until \printdate{2020-04-09}. The underreporting then decreased, and up until \printdate{2020-05-28} our estimate is that there had been 2.5 (95\% CrI: 1.0-5.0) SARS-CoV-2 infections for every COVID-19 case. The estimate of the underreporting ratio then remained at the same level until the end of the first wave.
+
+Figure \ref{fig:results_interestdate_ratio} shows the posterior distribution for the underreporting ratio by \printdate{2020-05-28}, based on either the screening or confirmation tests. Based on the confirmation test, the IQR for underreporting was 1.8 – 3.0. The estimate derived from the screening test data has more uncertainty and shows lower underreporting.
+
+
+\subsection{Time from COVID-19 symptom onset to seroconversion}
+
+Figure \ref{fig:U_posteriors} describes the posterior distributions of $\mu_U$ and $\sigma_U$, the parameters of the lognormal distribution of the time from COVID-19 symptom onset to seroconversion. The posterior medians of $\mu_U$ and $\sigma_U$ are 2.87 and 0.72, respectively. The figure also shows the posterior predictive distribution for the time from symptom onset to seroconversion. The predicted median delay from symptom onset to seroconversion is close to 18 days and the 75\% quantile is over 29 days. By day 60 since symptom onset, the probability of seroconversion is over 95\%.
+
+
+\subsection{Sensitivity analysis} \label{seq:results_sens}
+
+Figure \ref{fig:sigma_posteriors} shows the prior and posterior distributions of $\sigma$, the strength of dependency in the Estimation model, learned from the screening and confirmation test data. In both cases, the posterior distribution is similar to the (informative) prior distribution, indicating that the data do not contain much information about $\sigma$ and the analysis may be sensitive to the prior distribution of $\sigma$.
+
+Table \ref{tab:sensitivity_ratio} shows estimates of the underreporting ratio $\Delta(t)$, based on data from the confirmation test, using different prior parameter values for $(\mu_1)$, $\sigma_1$ and $\beta$. Smaller values of $\beta$ correspond to a higher prior expectation and higher prior variance for $\sigma$ and in turn higher posterior variance for $\Delta(t)$. For example, comparing choices $\beta = 2$ to $\beta = 40$ when $\alpha = 2$, logit$(\mu_1) = 0.05$ and $\sigma_1 = 2$, the 95\% credible intervals for $\Delta(t)$ on \printdate{2020-05-28} are $0.4-7.3$ and $1.0-5.0$, respectively.
+
+Choice of a larger logit$(\mu_1)$ corresponds to a higher posterior mean for $\Delta(t)$, but only marginally. For example, comparing the choice logit$(\mu_1) = 0.005$ to logit$(\mu_1) = 0.05$ when $\sigma_1 = 2$, $\beta = 40$, the posterior means for $\Delta(t)$ on \printdate{2020-05-28} are 2.4 and 2.6, respectively. A choice of smaller $\sigma_1$ reduces the posterior variance of $\Delta(t)$ and elevates the effect of the chosen $\mu_1$, but the effects are small. 
+
+In all cases, the effects of the prior parameter choices are magnified towards the end of the study period, when the number of available samples from the serosurveys is low.
+
+
+\section{Discussion}
+
+
+We estimated that with 95\% probability there were 1 to 5 SARS-CoV-2 infections for every COVID-19 case during the first epidemic wave in Finland. A 50\% probability interval for the underreporting was 1.8–3.0. The underreporting was highest before April 2020 when there were 4 to 17 infections for every COVID-19 case (95\% probability). It is likely that the seroprevalence in the extended capital region was over 0.5\% already by the end of May 2020 (95\% CrI: 0.2–1.2), while the cumulative incidence of COVID-19 cases in the region was 0.3\% by the end of June. Based on the estimate of underreporting and the cumulative incidence of COVID-19 cases, we estimate that between 0.5\%–1\% (50\% probability) and no more than 1.5\% (95\% probability) of the population in the capital region were infected with SARS-CoV-2 by the end of June 2020. 
+
+There is great uncertainty about the estimated seroprevalence and the corresponding estimate of underreporting at the end of the study period, due to the small number of samples available in the serosurveys. The estimates are therefore sensitive to the model specification (i.e. prior parameters). Accordingly, we consider the most robust estimate of underreporting during the first wave pertaining to the end of May 2020. We do not expect that the magnitude of underreporting changed significantly during the rest of the first wave, as there were no changes in virus testing policy or capacity. 
+
+Our analysis leaves a small but reasonable probability that by the end of the first wave there was no underreporting at all. It seems, however, unrealistic that no underreporting occurred, as in the general population the virus testing was targeted to symptomatic individuals only. Findings from a population-based screening in Iceland during March 2020 show that 43\% of individuals who tested positive for SARS-CoV-2 were asymptomatic and findings from Spain indicate that one third of infections were asymptomatic in April-May 2020 (\cite{gudbjartsson2020}, \cite{Pollan2020}). A systematic review and meta-analysis of 95 published studies estimates that globally 41\% (34\% - 48\%) of confirmed COVID-19 cases were asymptomatic during the pre COVID-19-vaccine era (\cite{jamameta)}. Our analysis also leaves a small but reasonable probability that only 20\% or less of SARS-CoV-2 infections were detected during the first epidemic wave. We believe that this may still be plausible, as other countries show even higher underreporting (\cite{Pollan2020}, \cite{erikstrup2020}).
+
+A key assumption in our analysis was that the serosurvey participants represented the population of interest. The participation rate was 50\%–64\% and there were several factors which may have caused selection bias. First, during the first two weeks, the surveys targeted only few of the largest municipalities. These had the highest numbers of COVID-19 cases, which may lead to overestimating the seroprevalence and thus the underreporting. However, an analysis using data only from the largest municipality (Helsinki) showed similar estimates of underreporting (data not shown). Secondly, the participation rate in younger age groups (18-29) was lower than in other age groups. Age is likely associated with the incidence of SARS-CoV-2 infection due to differences in social behaviour. In April 2020, Finns aged 18-29 had a similar frequency of daily social contacts than those aged 30-59, but a higher frequency of contacts than those aged 60-69 (\cite{auranen2021}). The underrepresentation of young adults in our study can lead to underestimation of the seroprevalence and of underreporting. Third, in several population health examination surveys, participation rates have been found lower among individuals with lower education (\cite{harkanen2016systematic}). Those individuals often work in professions where working remotely and social distancing may be more difficult to arrange, and thus they may be more exposed to infection. If those previous findings hold in this survey, this can lead to underestimation of seroprevalence and thus underreporting. Finally, our preliminary analyses from the serosurveys beyond the first wave indicate that subjects with a past confirmed SARS-CoV-2 infection tend to have a lower participation rate. It is possible that those with a confirmed infection were less willing to participate. This can lead to underestimation of the seroprevalence and of underreporting.
+
+The median age of COVID-19 cases in the HUS area showed a decreasing trend during spring 2020, most likely due to the increase in testing capacity, allowing detection of milder disease cases (figure \ref{fig:incidence_age}). It is therefore probable that the underreporting decreased more in younger age groups than in other age groups during the first epidemic wave. Other serological studies have used regression analysis or post stratification to account for differences between the age and sex distributions of survey participants and the underlying population (\cite{Stringhini2020}, \cite{merkely2020},  \cite{Pollan2020}). These methods could help reduce bias and allow for the estimation of age-dependent underreporting. We decided not to use such analytical methods due to the very small number of confirmed positive samples.
+
+Another key assumption in our analysis was that the time-dependent probability of seroconversion after COVID-19 symptoms, as estimated from the external data set (\cite{Tan2020}), is similar to how the antibody detection in the serological surveys would perform. Otherwise, the underreporting ratio, i.e. the ratio of the estimated seroprevalence (based on serosurveys) and the projected seroprevalence (based on COVID-19 cases) may not accurately describe underreporting. The patients in \cite{Tan2020} were all hospitalised and several of them were classified with severe pneumonia. By contrast, the majority of the FNIDR COVID-19 cases during the first epidemic wave did not require hospital care. Severe cases may have higher antibody responses, and this may cause us to overestimate the projected seroprevalence and hence underestimate the underreporting (\cite{haveri2021}). Additionally, the SARS-COV-2 antibody detection method utilised in \cite{Tan2020} differed from the methods utilised in the serosurveys. The serosurvey antibody detection was calibrated to be 100\% sensitive by day 30 since infection. By contrast, in \cite{Tan2020}, only 74\% of the patients had seroconverted by day 28 since symptom onset, and accordingly, our seroprevalence projection yielded approximately 75\% probability of seroconversion by day 30 since symptom onset. This discrepancy indicates that we may overestimate the time lag to developing detectable antibodies after COVID-19 symptoms. This in turn indicates that we may overestimate the underreporting during the beginning of the epidemic, at worst by a factor of around $0.75$. Therefore, instead of 4–17 there were perhaps 3-13 infections for every COVID-19 case before April. 
+
+When projecting the seroprevalence, we assumed that the probability of seropositivity following COVID-19 symptoms is strictly increasing over time. In reality, the antibody levels eventually wane and after 8 months since SARS-CoV-2 infection, the N-IgG antibodies are detectable in only 66\% of individuals (\cite{haveri2021}). Our analysis covers a period of four months, and there were not many infections in Finland before March 2020, so at worst we measured antibodies from serosurvey participants who were infected four months ago. The detectability of antibodies would then be at least 66\% and possibly over 80\%, assuming a linear decrease from the 100\% detectability at one month. By contrast, our seroprevalence projection gives an almost 100\% probability of seropositivity at four months since COVID-19 symptom onset. This worst-case discrepancy would correspond to overestimating the underreporting by 20\% at the end of the study period. To analyse data beyond the first epidemic wave, the seroprevalence projection should be modified to allow for a decrease in the probability of seropositivity after appropriate time.
+
+We included an analysis based on the screening test to demonstrate how our method can be used with tests which are not fully specific. The estimates of seroprevalence based on the screening test were lower than those based on the confirmation test, when adjusting for the expected false positive rate of the screening test. This implies that either the specificity of the screening test was higher than expected, or alternatively, the confirmation test was not fully specific. The confirmation test utilises a microneutralisation test (MNT) as the second test to confirm the presence of SARS-CoV-2 antibodies. Based on an analysis of a large number of pre-pandemic sera from different age cohorts, the MNT can be considered to be fully specific (\cite{Ekstrom2021}). It is therefore extremely unlikely that any of our 7 confirmed positives samples was a false positive; more likely the true specificity of the screening test was higher than we assumed. In our analysis, we assumed that the specificity of the screening test was a known constant, based on a 81/83 true negative finding. In reality, however, there is uncertainty in the exact specificity, and the results derived from the screening test therefore have more uncertainty than our analysis implies. For analysing data from a test with unknown specificity, we agree with treating the specificity as an unknown parameter, as recommended by \cite{gelman2020} and as implemented by e.g. \cite{Stringhini2020}. 
+
+We used a constant value 3.5 days as the delay from symptom onset to COVID-19 diagnosis. In reality, the exact delay is unknown and subject to variation. It is likely that 3.5 days is an underestimate of the delay in the extended capital region during the beginning of the epidemic, when the average delay was greater in the capital city (Helsinki, data not shown). However, small variations in this delay do not affect our analysis, as small changes in the COVID-19 symptom onset day would not significantly alter the seroprevalence projection. 
+
+In summary, we presented a Bayesian approach to estimate the time-dependent underreporting of SARS-CoV-2 infections during the COVID-19 epidemic. We implemented the proposed approach to data from the extended capital region of Finland during the first epidemic wave in 2020. Our results indicate that most SARS-CoV-2 infections were not detected and the underreporting was most severe during the beginning of the epidemic. However, as the cumulative incidence of COVID-19 was very low, it is likely that less than 1.5\% of the population in the extended capital region had been infected with SARS-CoV-2 by the beginning of July 2020. Assuming that the underreporting was similar in other parts of the country, the first wave of the COVID-19 epidemic left a vast majority of the Finnish population unaffected, with almost the entire population still unexposed and susceptible to SARS-CoV-2.
+
+
+\section{Conflict of interests}
+
+We report no conflict of interests related to the current work. 
+
+Finnish Institute for Health and Welfare (THL) conducts Public-Private Partnership with vaccine manufacturers and has received research funding from Sanofi Inc., Pfizer Inc., and GlaxoSmithKline Biologicals SA for studies not related to COVID-19. NT, MM, AAP and JJ have been investigators in these studies, but they have received no personal remuneration.
+
+
+\section{Acknowledgments}
+
+We thankfully acknowledge the fluent collaboration with the Digital and Population Data Services Agency DVV for access to the Finnish Population Information System (PIS) and especially for HUS Diagnostic Center HUSLAB for study sample logistics.
+
+We thank all the study participants. 
+
+We thank Juha Oksanen, Esa Ruokokoski, Elina Isosaari, Niina Ikonen, Dennis Ahlfors, Timo Koskenniemi, Nina Ekström, Pamela Österlund, Anu Haveri and Camilla Virta for their contributions related to data management and analyses.
+
+This study was funded by the Finnish Institute for Health and Welfare.
+
+\section{Data Accessibility}
+
+The aggregated data which supports the findings of this study are available in the supplementary material of this article. Individual level data are not available due to data privacy. More detailed data related to the COVID-19 cases in Finland are available by formal request to the Finnish Social and Health Data Permit Authority Findata.
+
+\section{Supplementary material}
+
+The STAN code which implements the statistical methods described, and an R code example which demonstrates how to apply the methods to the data described in the article, is available in \href{}{GitHub}.
+
+\section{Ethics approval statement}
+
+The study protocol was submitted for ethical review to the HUS ethical review board. Written informed consent was obtained from all participants.
+
+
+\newpage
+
+\bibliographystyle{biorefs}
+\bibliography{references}
+
+\newpage
+
+
+\section{Figures}
+
+\input{tex/FIGURES}
+
+\newpage
+
+\section{Tables}
+
+\input{tex/TABLES}
+
+\newpage
+
+\section{Supplementary figures}
+\beginsupplement
+
+\input{tex/SUPPLEMENT_FIG}
+\newpage
+
+\section{Supplementary tables}
+
+\input{tex/SUPPLEMENT_TAB}
+\newpage
+
+\section{Supplement: STAN code}
+
+\lstinputlisting[]{code/model.stan}
+
+
+\end{document}
+
