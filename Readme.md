@@ -1,6 +1,8 @@
 ## About
 
-This repositry contain the LateX codes and programming code examples related to the article titled *Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys*. 
+This repositry contain the LateX codes and programming code examples related to the manuscript titled *Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys*. 
+
+The manuscript is currently unpublished and should not be shared.
 
 ## Contents
 
