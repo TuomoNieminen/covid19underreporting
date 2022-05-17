@@ -1,7 +1,6 @@
 
 \begin{figure}[!htb]
 \centering
-\caption{Numbers of COVID-19 cases by week and municipality in the extended capital region of Helsinki and Uusimaa, Finland (HUS area) during the first wave of the 2020 COVID-19 outbreak. In each map, the number of cases in each municipality is shown if it is 5 or more. Detailed data for three weeks in June (2020-06-08 / 2020-06-15, 2020-06-15 / 2020-06-22 and 2020-06-22 / 2020-06-29), with total 147 cases, are not shown in the figure.}
 
 \begin{tabular}{cccccccccc}
 \includegraphics[width = 2.1in]{img/hus_incidence_04.png} & 
@@ -21,6 +20,8 @@
 \includegraphics[width = 2.1in]{img/hus_incidence_21.png} 
 \end{tabular}
 
+\caption{Numbers of COVID-19 cases by week and municipality in the extended capital region of Helsinki and Uusimaa, Finland (HUS area) during the first wave of the 2020 COVID-19 outbreak. In each map, the number of cases in each municipality is shown if it is 5 or more. Detailed data for three weeks in June (2020-06-08 / 2020-06-15, 2020-06-15 / 2020-06-22 and 2020-06-22 / 2020-06-29), with total 147 cases, are not shown in the figure.}
+
 \label{fig:huscases}
 \end{figure}
 
@@ -28,7 +29,6 @@
 
 \begin{figure}[!htb]
 \centering
-\caption{Population sampling in the extended capital region of Helsinki and Uusimaa, Finland (HUS area) during the first 10 weeks of the serological surveys. Population sampling was carried out weekly or biweekly and each map corresponds to a single sampling week. The first day of the week and the targeted native languages are listed for each sampling week (fi = Finnish, sv = Swedish, ru = Russian, en = English). The number of invited individuals by municipality are shown on each map. }
 
 \begin{tabular}{cccccccccc}
 \includegraphics[width = 2.1in]{img/sample01.png} &  
@@ -42,6 +42,8 @@
 \includegraphics[width = 2.1in]{img/sample09.png} \\
 \includegraphics[width = 2.1in]{img/sample10.png} 
 \end{tabular}
+
+\caption{Population sampling in the extended capital region of Helsinki and Uusimaa, Finland (HUS area) during the first 10 weeks of the serological surveys. Population sampling was carried out weekly or biweekly and each map corresponds to a single sampling week. The first day of the week and the targeted native languages are listed for each sampling week (fi = Finnish, sv = Swedish, ru = Russian, en = English). The number of invited individuals by municipality are shown on each map. }
 
 \label{fig:survey}
 \end{figure}
@@ -91,7 +93,7 @@
 
 \begin{figure}[!htb]
 \centering
-\caption{Seroprevalence in the extended capital region of Finland during the first wave of the COVID-19 epidemic. Both images show the estimates $\pi^{(0)}(t)$ and projections $\pi^{(1)}(t)$ for seroprevalence using the serology survey observations and COVID-19 cases (FNIDR projection), respectively. The image on the left shows results for the screening test and the image on the right shows results for the confirmation test. Solid lines are posterior means and the shaded areas correspond to 95\% credible intervals derived from the pointwise 2.5\% and 97.5\% quantiles. The dashed lines show the projected seroprevalence and the shaded areas correspond to 95\% credible intervals, however, the intervals for projected seroprevalence are very narrow and not visible.}
+
 
 \begin{subfigure}{0.47\textwidth}
 \includegraphics[width=\linewidth]{img/ttr_screen.png}
@@ -103,6 +105,8 @@
 \caption{Posterior means and 95\% credible intervals of seroprevalence $\pi^{(0)}(t)$ (Confirmation test) and projected seroprevalence $\pi^{(1)}(t)$} \label{fig:ttr_mnt}
 \end{subfigure}
 
+\caption{Seroprevalence in the extended capital region of Finland during the first wave of the COVID-19 epidemic. Both images show the estimates $\pi^{(0)}(t)$ and projections $\pi^{(1)}(t)$ for seroprevalence using the serology survey observations and COVID-19 cases (FNIDR projection), respectively. The image on the left shows results for the screening test and the image on the right shows results for the confirmation test. Solid lines are posterior means and the shaded areas correspond to 95\% credible intervals derived from the pointwise 2.5\% and 97.5\% quantiles. The dashed lines show the projected seroprevalence and the shaded areas correspond to 95\% credible intervals, however, the intervals for projected seroprevalence are very narrow and not visible.}
+
 \label{fig:seroprevalence}
 \end{figure}
 
@@ -112,7 +116,6 @@
 
 \begin{figure}[!htb]
 \centering
-\caption{Posterior distributions of seroprevalence $\pi^{(0)}(t)$, where t corresponds to \printdate{2020-05-08}, learned from the screening (left image) and confirmation (right image) test data. The seroprevalence is shown in percentage scale.}
 
 \begin{subfigure}{0.45\textwidth}
 \includegraphics[width=\linewidth]{img/screen_p_sero_interestdate.png} 
@@ -124,6 +127,8 @@
 \caption{Posterior density of $\pi^{(0)}(t)$, where $t$ corresponds to \printdate{2020-05-08}, learned from the confirmation test data.} \label{fig:mnt_p_sero_interestdate}
 \end{subfigure}
 
+\caption{Posterior distributions of seroprevalence $\pi^{(0)}(t)$, where t corresponds to \printdate{2020-05-08}, learned from the screening (left image) and confirmation (right image) test data. The seroprevalence is shown in percentage scale.}
+
 \label{fig:results_interestdate_seroprev}
 \end{figure}
 
@@ -134,7 +139,6 @@
 
 \begin{figure}[!htb]
 \centering
-\caption{Extent of underreporting in the extended capital region of Finland during the first wave of the COVID-19 epidemic. Both figures show the underreporting ratio $\Delta(t)$ (see equation \ref{eq:ratio}). The image on the left shows results for the screening test and the image on the right shows results for the confirmation test. Solid lines are posterior means and the shaded areas correspond to 95\% credible intervals derived from the pointwise 2.5\% and 97.5\% quantiles.}
 
 \begin{subfigure}{0.47\textwidth}
 \includegraphics[width=\linewidth]{img/ttr_screen_ratio.png} 
@@ -146,6 +150,8 @@
 \caption{Posterior means and 95\% credible intervals of underreporting ratio $\Delta(t)$ (Confirmation test)} \label{fig:ttr_mnt_ratio}
 \end{subfigure}
 
+\caption{Extent of underreporting in the extended capital region of Finland during the first wave of the COVID-19 epidemic. Both figures show the underreporting ratio $\Delta(t)$ (see equation \ref{eq:ratio}). The image on the left shows results for the screening test and the image on the right shows results for the confirmation test. Solid lines are posterior means and the shaded areas correspond to 95\% credible intervals derived from the pointwise 2.5\% and 97.5\% quantiles.}
+
 \label{fig:underreporting}
 \end{figure}
 
@@ -155,7 +161,6 @@
 
 \begin{figure}[!htb]
 \centering
-\caption{Posterior distributions of underreporting ratio $\Delta(t)$, where t corresponds to \printdate{2020-05-08}, learned from the screening test (left image) and confirmation test (right image) data.}
 
 \begin{subfigure}{0.45\textwidth}
 \includegraphics[width=\linewidth]{img/screen_ratio_interestdate.png}
@@ -166,6 +171,8 @@
 \includegraphics[width=\linewidth]{img/mnt_ratio_interestdate.png} 
 \caption{Posterior density of $\Delta(t)$, where $t$ corresponds to \printdate{2020-05-08}0, learned from confirmation test data} \label{fig:mnt_ratio_interestdate}
 \end{subfigure}
+
+\caption{Posterior distributions of underreporting ratio $\Delta(t)$, where t corresponds to \printdate{2020-05-08}, learned from the screening test (left image) and confirmation test (right image) data.}
 
 \label{fig:results_interestdate_ratio}
 \end{figure}
