@@ -7,6 +7,6 @@ The manuscript is currently unpublished and should not be shared.
 ## Contents
 
 - article.tex contains the LateX codes used to typeset the article. 
-- data/table2.csv contains data related to the article.
-- code/example.R contains an example on how to apply the method intruduced. The example allows for approximate reproduction of the main results of the article, based on the public data/.
+- data/table2.csv contains data included in the article.
+- code/example.R contains an example on how to apply the method introduced to the data included. The example allows for approximate reproduction of the main results of the article, based on the aggregated data included in the article.
 
