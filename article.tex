@@ -1,12 +1,27 @@
-\documentclass[oupdraft]{bio}
-% \usepackage[colorlinks=true, urlcolor=citecolor, linkcolor=citecolor, citecolor=citecolor]{hyperref}
+%% Template for the submission to:
+%%   The Annals of Applied Statistics [AOAS]
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% In this template, the places where you   %%
+%% need to fill in your information are     %%
+%% indicated by '???'.                      %%
+%%                                          %%
+%% Please do not use \input{...} to include %%
+%% other tex files. Submit your LaTeX       %%
+%% manuscript as one .tex document.         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[aoas]{imsart}
+
+%% Packages
+
+% defined by template
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+\RequirePackage[authoryear]{natbib}
+
+% other packages
 \usepackage{url}
-
-% Add history information for the article if required
-% \history{}
-
 \usepackage{moreverb}
-
 \usepackage{bbm}
 \usepackage{tikz}
 \usepackage{float}
@@ -18,16 +33,7 @@
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage{systeme,mathtools}
-
-
 \usepackage[english]{isodate}
-
-\newcommand{\beginsupplement}{%
-        \setcounter{table}{0}
-        \renewcommand{\thetable}{S\arabic{table}}%
-        \setcounter{figure}{0}
-        \renewcommand{\thefigure}{S\arabic{figure}}%
-     }
 
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{positioning,arrows.meta,quotes}
@@ -38,6 +44,48 @@
 below left=5pt and 0pt of #1.south]
 
 
+\startlocaldefs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Uncomment next line to change            %%
+%% the type of equation numbering           %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Axiom, Claim, Corollary, Hypothesis, %%
+%% Lemma, Theorem, Proposition              %%
+%% use \theoremstyle{plain}                 %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\theoremstyle{plain}
+%\newtheorem{???}{???}
+%\newtheorem*{???}{???}
+%\newtheorem{???}{???}[???]
+%\newtheorem{???}[???]{???}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% For Assumption, Definition, Example,     %%
+%% Notation, Property, Remark, Fact         %%
+%% use \theoremstyle{remark}                %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\theoremstyle{remark}
+%\newtheorem{???}{???}
+%\newtheorem*{???}{???}
+%\newtheorem{???}{???}[???]
+%\newtheorem{???}[???]{???}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\beginsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
@@ -47,56 +95,74 @@ below left=5pt and 0pt of #1.south]
 T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 
-%\raggedbottom
+\endlocaldefs
 
 \begin{document}
 
-% Title of paper
+\begin{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          %%
+%% Enter the title of your article here     %%
+%%                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \title{Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys}
 
-% List of authors, with corresponding author marked by asterisk
+\runtitle{Underreporting of infections –  Bayesian inference}
+%\thankstext{T1}{A sample of additional note to the title.}
 
-\author{Tuomo A. Nieminen$^\ast$, Kari Auranen, Sangita Kulathinal, \\
-Tommi Härkänen, Merit Melin, Arto A. Palmu, Jukka Jokinen}
+\begin{aug}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Only one address is permitted per author. %%
+%% Only division, organization and e-mail is %%
+%% included in the address.                  %%
+%% Additional information can be included in %%
+%% the Acknowledgments section if necessary. %%
+%% ORCID can be inserted by command:         %%
+%% \orcid{0000-0000-0000-0000}               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textit{Finnish Institute for Health and Welfare,
-University of Turku,
-University of Helsinki}
-\\[2pt]
-
-% \author[1,2]{Tuomo A. Nieminen$^\ast$}
-% \author[1,3]{Kari Auranen}
-% \author[2, 1]{Sangita Kulathinal}
-% \author[1,2]{Tommi Härkänen}
-% \author[1]{Merit Melin}
-% \author[1]{Arto A. Palmu}
-% \author[1,2]{Jukka Jokinen}
-
-% \address[1]{\orgname{Finnish Institute for Health and Welfare}, \orgaddress{\country{Finland}}}
-% \address[2]{ \orgname{University of Helsinki}, \orgaddress{\country{Finland}}}
-% \address[3]{ \orgname{University of Turku}, \orgaddress{\country{Finland}}}
-
-
-% E-mail address for correspondence
-{\email{tuomo.nieminen@thl.fi, tuomo.a.nieminen@gmail.com}}
-
-% Running headers of paper:
-\markboth%
-% First field is the short list of authors
-{Tuomo A. Nieminen and others}
-% Second field is the short title of the paper
-{Underreporting SARS-CoV-2 infections}
-
-\maketitle
-
-% Add a footnote for the corresponding author if one has been
-% identified in the author list
-\footnotetext{To whom correspondence should be addressed.}
+\author[A, B]{\fnms{Tuomo A.}~\snm{Nieminen}\ead[label=e1]{tuomo.nieminen@thl.fi}\ead[label=e2]{tuomo.a.nieminen@helsinki.fi}},
+\author[C]{\fnms{Kari}~\snm{Auranen}\ead[label=e3]{kajuaur@utu.fi}},
+\author[B]{\fnms{Sangita}~\snm{Kulathinal}\ead[label=e4]{sangita.kulathinal@helsinki.fi}},
+\author[A]{\fnms{Tommi}~\snm{Härkänen}\ead[label=e5]{tommi.harkanen@thl.fi}},
+\author[A]{\fnms{Merit}~\snm{Melin}\ead[label=e6]{merit.melin@thl.fi}},
+\author[A]{\fnms{Arto A.}~\snm{Palmu}\ead[label=e7]{arto.palmu@thl.fi}}
+\and
+\author[A]{\fnms{Jukka}~\snm{Jokinen}\ead[label=e8]{jukka.jokinen@thl.fi}}
 
 
-\abstract{In Finland, the first wave of the COVID-19 epidemic caused by the severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) took place from March to June 2020, with the majority of COVID-19 cases diagnosed in the extended capital region. The magnitude and trend in the incidence of COVID-19 is one way to monitor the course of the epidemic. The diagnosed COVID-19 cases are a subset of the infections and therefore the COVID-19 incidence underestimates the SARS-CoV-2 incidence. The likelihood that an individual with SARS-CoV-2 infection is diagnosed with COVID-19 depends on the clinical manifestation as well as the infection testing policy and capacity. These factors may fluctuate over time and the underreporting of infections changes accordingly. Quantifying the extent of underreporting allows the assessment of the true incidence of infection. To obtain information on the incidence of SARS-CoV-2 infection in Finland, a series of serological surveys was initiated in April 2020. We develop a Bayesian inference approach and apply it to data from the serological surveys, COVID-19 cases, and external data, to estimate the time-dependent underreporting of SARS-Cov-2 infections. There were 1 to 5 (95\% probability) SARS-CoV-2 infections for every COVID-19 case during the first wave of the COVID-19 epidemic in Finland. The underreporting was highest before April when there were 4 to 17 (95\% probability) infections for every COVID-19 case. It is likely that between 0.5\%–1.0\% (50\% probability) and no more than 1.5\% (95\% probability) of the population in the extended capital region were infected with SARS-CoV-2 by the beginning of July 2020.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Addresses                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\address[A]{Finnish Institute for Health and Welfare\printead[presep={,\ }]{e1,e5,e6,e7,e8}}
+\address[B]{University of Helsinki\printead[presep={,\ }]{e2,e4}}
+\address[C]{University of Turku\printead[presep={,\ }]{e3}}
 
-COVID-19, SARS-COV-2, Serological survey, SARS-CoV-2 seroprevalence, Bayesian inference
+\end{aug}
+
+\begin{abstract}
+In Finland, the first wave of the COVID-19 epidemic caused by the severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) took place from March to June 2020, with the majority of COVID-19 cases diagnosed in the extended capital region. The magnitude and trend in the incidence of COVID-19 is one way to monitor the course of the epidemic. The diagnosed COVID-19 cases are a subset of the infections and therefore the COVID-19 incidence underestimates the SARS-CoV-2 incidence. The likelihood that an individual with SARS-CoV-2 infection is diagnosed with COVID-19 depends on the clinical manifestation as well as the infection testing policy and capacity. These factors may fluctuate over time and the underreporting of infections changes accordingly. Quantifying the extent of underreporting allows the assessment of the true incidence of infection. To obtain information on the incidence of SARS-CoV-2 infection in Finland, a series of serological surveys was initiated in April 2020. We develop a Bayesian inference approach and apply it to data from the serological surveys, COVID-19 cases, and external data, to estimate the time-dependent underreporting of SARS-Cov-2 infections. There were 1 to 5 (95\% probability) SARS-CoV-2 infections for every COVID-19 case during the first wave of the COVID-19 epidemic in Finland. The underreporting was highest before April when there were 4 to 17 (95\% probability) infections for every COVID-19 case. It is likely that between 0.5\%–1.0\% (50\% probability) and no more than 1.5\% (95\% probability) of the population in the extended capital region were infected with SARS-CoV-2 by the beginning of July 2020.
+
+\end{abstract}
+
+\begin{keyword}
+\kwd{COVID-19}
+\kwd{SARS-COV-2}
+\kwd{Serological survey}
+\kwd{seroprevalence}
+\kwd{Bayesian inference}
+\end{keyword}
+
+\end{frontmatter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please use \tableofcontents for articles %%
+%% with 50 pages and more                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Main text entry area:
 
 
 \section{Introduction}
@@ -374,42 +440,64 @@ We used a constant value 3.5 days as the delay from symptom onset to COVID-19 di
 In summary, we presented a Bayesian approach to estimate the time-dependent underreporting of SARS-CoV-2 infections during the COVID-19 epidemic. We implemented the proposed approach to data from the extended capital region of Finland during the first epidemic wave in 2020. Our results indicate that most SARS-CoV-2 infections were not detected and the underreporting was most severe during the beginning of the epidemic. However, as the cumulative incidence of COVID-19 was very low, it is likely that less than 1.5\% of the population in the extended capital region had been infected with SARS-CoV-2 by the beginning of July 2020. Assuming that the underreporting was similar in other parts of the country, the first wave of the COVID-19 epidemic left a vast majority of the Finnish population unaffected, with almost the entire population still unexposed and susceptible to SARS-CoV-2.
 
 
-\section{Conflict of interests}
-
-We report no conflict of interests related to the current work. 
-
-Finnish Institute for Health and Welfare (THL) conducts Public-Private Partnership with vaccine manufacturers and has received research funding from Sanofi Inc., Pfizer Inc., and GlaxoSmithKline Biologicals SA for studies not related to COVID-19. NT, MM, AAP and JJ have been investigators in these studies, but they have received no personal remuneration.
 
 
-\section{Acknowledgments}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Support information, if any,             %%
+%% should be provided in the                %%
+%% Acknowledgements section.                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{acks}[Acknowledgments]
 
-We thankfully acknowledge the fluent collaboration with the Digital and Population Data Services Agency DVV for access to the Finnish Population Information System (PIS) and especially for HUS Diagnostic Center HUSLAB for study sample logistics.
-
-We thank all the study participants. 
-
-We thank Juha Oksanen, Esa Ruokokoski, Elina Isosaari, Niina Ikonen, Dennis Ahlfors, Timo Koskenniemi, Nina Ekström, Pamela Österlund, Anu Haveri and Camilla Virta for their contributions related to data management and analyses.
-
-This study was funded by the Finnish Institute for Health and Welfare.
-
-\section{Data Accessibility}
-
-The aggregated data which supports the findings of this study are available in the supplementary material of this article. Individual level data are not available due to data privacy. More detailed data related to the COVID-19 cases in Finland are available by formal request to the Finnish Social and Health Data Permit Authority Findata.
-
-\section{Supplementary material}
-
-The STAN code which implements the statistical methods described, and R code example which demonstrates how to apply the methods to the data described in the article, is available online \url{github.com/TuomoNieminen/covid19underreporting}. 
-
-\section{Ethics approval statement}
+We thankfully acknowledge the fluent collaboration with the Digital and Population Data Services Agency DVV for access to the Finnish Population Information System (PIS) and especially for HUS Diagnostic Center HUSLAB for study sample logistics. We thank all the study participants. We thank Juha Oksanen, Esa Ruokokoski, Elina Isosaari, Niina Ikonen, Dennis Ahlfors, Timo Koskenniemi, Nina Ekström, Pamela Österlund, Anu Haveri and Camilla Virta for their contributions related to data management and analyses. 
 
 The study protocol was submitted for ethical review to the HUS ethical review board. Written informed consent was obtained from all participants.
 
 
-\newpage
+\end{acks}
 
-\bibliographystyle{biorefs}
-\bibliography{references}
+\begin{funding}
 
-\newpage
+This study was funded by the Finnish Institute for Health and Welfare. We report no conflict of interests related to the current work. Finnish Institute for Health and Welfare (THL) conducts Public-Private Partnership with vaccine manufacturers and has received research funding from Sanofi Inc., Pfizer Inc., and GlaxoSmithKline Biologicals SA for studies not related to COVID-19. TAN, MM, AAP and JJ have been investigators in these studies, but they have received no personal remuneration.
+
+\end{funding}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Supplementary Material, including data   %%
+%% sets and code, should be provided in     %%
+%% {supplement} environment with title      %%
+%% and short description. It cannot be      %%
+%% available exclusively as external link.  %%
+%% All Supplementary Material must be       %%
+%% available to the reader on Project       %%
+%% Euclid with the published article.       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{supplement}
+\stitle{Program code and data accessibility}
+\sdescription{The STAN code which implements the statistical methods described, and an R code example which demonstrates how to apply the methods to the data described and included in the article, is available online: \url{github.com/TuomoNieminen/covid19underreporting}. Individual level data are not available due to data privacy. More detailed data related to the COVID-19 cases in Finland are available by formal request to the Finnish Social and Health Data Permit Authority Findata.}
+\end{supplement}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                  The Bibliography                       %%
+%%                                                         %%
+%%  imsart-nameyear.bst  will be used to                   %%
+%%  create a .BBL file for submission.                     %%
+%%                                                         %%
+%%  Note that the displayed Bibliography will not          %%
+%%  necessarily be rendered by Latex exactly as specified  %%
+%%  in the online Instructions for Authors.                %%
+%%                                                         %%
+%%  MR numbers will be added by VTeX.                      %%
+%%                                                         %%
+%%  Use \cite{...} to cite references in text.             %%
+%%                                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% if your bibliography is in bibtex format, uncomment commands:
+\bibliographystyle{imsart-nameyear} % Style BST file
+\bibliography{references}       % Bibliography file (usually '*.bib')
 
 
 \section{Figures}
