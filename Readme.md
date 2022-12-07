@@ -1,8 +1,6 @@
 ## About
 
-This repositry contains programming code examples related to the manuscript titled *Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys*. 
-
-The manuscript is currently unpublished.
+This repository contains programming code examples related to the manuscript titled *Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys*. 
 
 ## Contents
 
