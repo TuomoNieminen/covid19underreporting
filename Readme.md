@@ -2,7 +2,7 @@
 
 This repository contains a minimal dataset and programming code examples related to the manuscript titled *Underreporting of SARS-CoV-2 infections during the first wave of the 2020 COVID-19 epidemic in Finland - Bayesian inference based on a series of serological surveys*. 
 
-The manuscript is (published on PLOS ONE)[https://doi.org/10.1371/journal.pone.0282094]
+The manuscript is [published on PLOS ONE](https://doi.org/10.1371/journal.pone.0282094)
 
 
 ## Contents
